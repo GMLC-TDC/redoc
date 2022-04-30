@@ -32,6 +32,7 @@ _REDOC_CONF_SCHEMA = {
             'name': {'type': 'string'},
             'page': {'type': 'string'},
             'spec': {'type': 'string'},
+            'spec-root': {'type': 'string'},
             'embed': {'type': 'boolean'},
             'template': {'type': 'string'},
             'opts': {
@@ -103,22 +104,27 @@ def render(app):
         # case of later we need to copy the spec into output directory, as
         # otherwise it won't be available when the result is deployed.
         elif not ctx['spec'].startswith(('http', 'https')):
-
             specpath = os.path.join(app.builder.outdir, '_specs')
-            specname = os.path.basename(ctx['spec'])
 
             ensuredir(specpath)
 
-            copyfile(
-                # Since the path may be relative it should be joined with
-                # base URI which is a path of directory with conf.py in
-                # our case.
-                os.path.join(app.confdir, ctx['spec']),
-                os.path.join(specpath, specname))
+            if not ctx['spec-root']:
+                specname = os.path.basename(ctx['spec'])
+                copyfile(
+                    # Since the path may be relative it should be joined with
+                    # base URI which is a path of directory with conf.py in
+                    # our case.
+                    os.path.join(app.confdir, ctx['spec']),
+                    os.path.join(specpath, specname))
 
-            # The link inside the rendered document must refer to a new
-            # location, the place where it has been copied to.
-            ctx['spec'] = os.path.join('_specs', specname)
+                # The link inside the rendered document must refer to a new
+                # location, the place where it has been copied to.
+                ctx['spec'] = os.path.join('_specs', specname)
+            else:
+                # If a spec root path was given, copy the entire directory to
+                # maintain the same relative paths between files
+                copy_asset(os.path.join(app.confdir, ctx['spec-root']), specpath)
+                ctx['spec'] = os.path.join('_specs', ctx['spec'])
 
         # Propagate information about page rendering to Sphinx. There's
         # a little trick in here: we pass an actual Jinja2 template instance
