@@ -161,5 +161,5 @@ def setup(app):
     app.connect('html-collect-pages', render)
     app.connect('build-finished', assets)
 
-    version = pkg_resources.get_distribution('sphinxcontrib-redoc').version
+    version = pkg_resources.get_distribution('gmlc-tdc-sphinxcontrib-redoc').version
     return {'version': version, 'parallel_read_safe': True}
