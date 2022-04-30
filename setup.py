@@ -11,11 +11,11 @@ with open(os.path.join(here, 'README.rst'), 'r', encoding='utf-8') as f:
 
 
 setup(
-    name='sphinxcontrib-redoc',
+    name='gmlc-tdc-sphinxcontrib-redoc',
     description='ReDoc powered OpenAPI (fka Swagger) spec renderer for Sphinx',
     long_description=long_description,
     license='BSD',
-    url='https://github.com/ikalnytskyi/sphinxcontrib-redoc',
+    url='https://github.com/gmlc-tdc/redoc',
     keywords='sphinx openapi swagger rest api renderer docs redoc',
     author='Ihor Kalnytskyi',
     author_email='ihor@kalnytskyi.com',

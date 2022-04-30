@@ -33,7 +33,7 @@ def run_sphinx(tmpdir):
         confpy = jinja2.Template(textwrap.dedent('''
             import os
 
-            project = 'sphinxcontrib-redoc'
+            project = 'gmlc-tdc-sphinxcontrib-redoc'
             copyright = '2017, Ihor Kalnytskyi'
 
             extensions = ['sphinxcontrib.redoc']
